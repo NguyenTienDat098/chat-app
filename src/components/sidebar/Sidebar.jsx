@@ -7,12 +7,20 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 import Tippy from "@tippyjs/react/headless";
 
+const menuItem = [
+  {
+    name: "Edit Profile",
+    link: "/edit-profile",
+  },
+];
+
 function SideBar() {
   const AuthData = useContext(AuthContext);
+  const [visibleTippy, setVisibleTippy] = useState(false);
   const { users, logout } = AuthData;
   const handleLogout = async () => {
     try {
@@ -44,14 +52,30 @@ function SideBar() {
         </li>
         <Tippy
           interactive
+          onClickOutside={() => {
+            setVisibleTippy(false);
+          }}
+          visible={visibleTippy}
           render={(attrs) => (
             <div
-              className="box w-40 rounded-lg shadow-md p-5 flex items-center justify-center flex-col"
+              className="box min-w-40 rounded-lg shadow-md p-5 flex items-center justify-center flex-col"
               tabIndex="-1"
               {...attrs}
             >
-              <div className="flex items-center w-full">Edit Profile</div>
-              <div className="flex items-center w-full" onClick={handleLogout}>
+              {menuItem.map((e, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center w-full mb-2 p-2 cursor-pointer select-none hover:bg-gray-400 transition-all duration-200 ease-linear rounded-lg"
+                  >
+                    {e.name}
+                  </div>
+                );
+              })}
+              <div
+                className="flex items-center w-full p-2"
+                onClick={handleLogout}
+              >
                 <FontAwesomeIcon
                   icon={faRightFromBracket}
                   className="mr-1 cursor-pointer"
@@ -61,7 +85,14 @@ function SideBar() {
             </div>
           )}
         >
-          <li className="item cursor-pointer">
+          <li
+            className="item cursor-pointer"
+            onClick={() => {
+              setVisibleTippy((prev) => {
+                return prev ? false : true;
+              });
+            }}
+          >
             <img
               src={
                 users.photoURL

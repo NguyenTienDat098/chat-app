@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import Notification from "../../components/notifications/Notification";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 
 function Register() {
@@ -11,6 +12,8 @@ function Register() {
 
   return (
     <div className="login-page w-screen h-screen flex items-center justify-center flex-col bg-slate-100">
+      <Notification />
+
       <div className="title mb-3">
         <p className="font-bold text-lg text-center">Sign Up</p>
         <p className="text-gray-500">Sign up to continute to Chat</p>
@@ -58,6 +61,7 @@ function Register() {
           />
           <p className="note ml-4 text-sm mt-1 text-red-500"></p>
         </div>
+
         <button
           className="submit w-11/12 bg-green-400 text-white rounded-lg p-2 hover:bg-green-500 transition-all duration-200 ease-linear mb-3"
           onClick={() => {

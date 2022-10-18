@@ -21,7 +21,6 @@ function ViewListMessage() {
     };
   }, [chatInfor, users]);
   const currentMessages = useFireStore("messages", messageCondition, "roomId");
-  console.log(listUser);
   // check has network
   const hasNetwork = (online) => {
     updataDocumment("users", users.uid, {

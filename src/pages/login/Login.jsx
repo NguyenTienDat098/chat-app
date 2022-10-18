@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
+import Notification from "../../components/notifications/Notification";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,7 @@ function Login() {
   };
   return (
     <div className="login-page w-screen h-screen flex items-center justify-center flex-col bg-slate-100">
+      <Notification />
       <div className="title mb-3">
         <p className="font-bold text-lg text-center">Sign In</p>
         <p className="text-gray-500">Sign in to continute to Chat</p>

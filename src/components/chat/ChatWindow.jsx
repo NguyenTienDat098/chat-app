@@ -35,7 +35,6 @@ function ChatWindow() {
   }, [currentMessages]);
 
   const handleSendMessage = (valueMessage) => {
-    console.log(chatInfor, users);
     if (valueMessage !== "") {
       addDocument("messages", {
         uid: users.uid,
@@ -50,6 +49,30 @@ function ChatWindow() {
       inputRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    const handlePressEnter = (e) => {
+      if (e.keyCode === 13) {
+        if (message !== "") {
+          addDocument("messages", {
+            uid: users.uid,
+            idUserSend: users.uid,
+            idUserReceived: chatInfor.currentUidUserChat,
+            content: message,
+            roomId: parseInt(
+              parseInt(chatInfor.secret) + parseInt(users.secret)
+            ).toString(),
+          });
+          setMessage("");
+          inputRef.current.focus();
+        }
+      }
+    };
+    window.addEventListener("keyup", handlePressEnter);
+    return () => {
+      window.removeEventListener("keyup", handlePressEnter);
+    };
+  }, [chatInfor, users, message]);
 
   if (showChat) {
     return (
